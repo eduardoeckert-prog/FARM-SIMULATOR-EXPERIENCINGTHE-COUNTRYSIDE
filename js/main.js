@@ -1,7 +1,7 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
 import { scene, camera, renderer, setupScene } from "./scene.js";
-import { setupControls, updateControls } from "./sistems/controls.js";
+import { setupControls, updateControls } from "./systems/controls.js";
 
 import { createTerrain } from "./world/terrain.js";
 import { createWater } from "./world/lakes.js";
@@ -11,8 +11,8 @@ import { createBuildings } from "./world/building.js";
 import { createCrops, updateCrops } from "./farming/crops.js";
 import { createAnimals, updateAnimals } from "./animals/animals.js";
 
-import { updateClimate } from "./sistems/climate.js";
-import { updateTime } from "./sistems/timeSystem.js";
+import { updateClimate } from "./systems/climate.js";
+import { updateTime } from "./systems/timeSystem.js";
 
 import { updateHUD } from "./ui/hud.js";
 import { updateInteraction } from "./interaction.js";
