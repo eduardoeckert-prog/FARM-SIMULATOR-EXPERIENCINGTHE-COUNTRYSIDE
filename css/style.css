@@ -1,0 +1,411 @@
+/* =======================================================
+   ECOFAZENDA - ESTILO PRINCIPAL
+   ======================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    background: #87ceeb;
+    color: white;
+}
+
+/* =======================================================
+   CANVAS
+   ======================================================= */
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* =======================================================
+   HUD
+   ======================================================= */
+
+#hud {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+
+    pointer-events: none;
+    z-index: 100;
+}
+
+#hud-top {
+
+    position: absolute;
+
+    top: 15px;
+    left: 15px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#hud-time,
+#hud-climate,
+#hud-season,
+#hud-location {
+
+    background: rgba(0, 0, 0, 0.45);
+
+    padding: 8px 12px;
+
+    border-radius: 8px;
+
+    backdrop-filter: blur(4px);
+
+    font-size: 14px;
+}
+
+#hud-environment {
+
+    position: absolute;
+
+    bottom: 15px;
+    left: 15px;
+
+    background: rgba(0,0,0,0.45);
+
+    padding: 10px 15px;
+
+    border-radius: 10px;
+
+    max-width: 320px;
+
+    font-size: 14px;
+}
+
+/* =======================================================
+   DESCOBERTAS
+   ======================================================= */
+
+#discovery-box {
+
+    position: absolute;
+
+    top: 80px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: rgba(0, 0, 0, 0.75);
+
+    padding: 14px 22px;
+
+    border-radius: 12px;
+
+    opacity: 0;
+
+    transition: 0.5s;
+
+    font-size: 15px;
+
+    pointer-events: none;
+}
+
+#discovery-box.show {
+    opacity: 1;
+}
+
+/* =======================================================
+   CONQUISTAS
+   ======================================================= */
+
+.achievement-popup {
+
+    position: fixed;
+
+    right: 20px;
+    top: -200px;
+
+    width: 260px;
+
+    background: rgba(0,0,0,0.85);
+
+    padding: 15px;
+
+    border-radius: 12px;
+
+    transition: 0.5s ease;
+
+    z-index: 500;
+}
+
+.achievement-popup.show {
+    top: 20px;
+}
+
+.achievement-popup h3 {
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+.achievement-popup p {
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+/* =======================================================
+   MENU PRINCIPAL
+   ======================================================= */
+
+#main-menu {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,0.75);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.menu-panel {
+
+    background: rgba(20,20,20,0.9);
+
+    padding: 40px;
+
+    border-radius: 16px;
+
+    width: 420px;
+
+    max-width: 90%;
+}
+
+.menu-title {
+
+    text-align: center;
+
+    margin-bottom: 10px;
+
+    font-size: 36px;
+}
+
+.menu-subtitle {
+
+    text-align: center;
+
+    margin-bottom: 25px;
+
+    opacity: 0.8;
+}
+
+.menu-button {
+
+    width: 100%;
+
+    padding: 14px;
+
+    margin-top: 10px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    transition: 0.25s;
+}
+
+.menu-button:hover {
+
+    transform: translateY(-2px);
+}
+
+/* =======================================================
+   CRÉDITOS
+   ======================================================= */
+
+#credits-screen {
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0,0,0,0.85);
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1200;
+}
+
+.credits-panel {
+
+    width: 500px;
+
+    max-width: 90%;
+
+    background: #1f1f1f;
+
+    border-radius: 15px;
+
+    padding: 30px;
+}
+
+.credits-panel h2 {
+    margin-bottom: 20px;
+}
+
+.credits-panel p {
+
+    margin-bottom: 12px;
+
+    line-height: 1.5;
+}
+
+.credits-panel button {
+
+    margin-top: 10px;
+
+    padding: 10px 20px;
+
+    cursor: pointer;
+}
+
+/* =======================================================
+   MINIMAPA
+   ======================================================= */
+
+#minimap {
+
+    position: fixed;
+
+    right: 20px;
+    bottom: 20px;
+
+    width: 180px;
+    height: 180px;
+
+    border-radius: 50%;
+
+    overflow: hidden;
+
+    background: rgba(0,0,0,0.55);
+
+    border: 2px solid white;
+
+    z-index: 100;
+}
+
+#minimap-player {
+
+    position: absolute;
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background: red;
+
+    transform: translate(-50%, -50%);
+}
+
+.map-object {
+
+    position: absolute;
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
+.map-building {
+    background: orange;
+}
+
+.map-water {
+    background: cyan;
+}
+
+.map-animal {
+    background: yellow;
+}
+
+/* =======================================================
+   RESPONSIVIDADE
+   ======================================================= */
+
+@media (max-width: 1024px) {
+
+    #minimap {
+
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .menu-title {
+        font-size: 28px;
+    }
+
+    #minimap {
+
+        width: 130px;
+        height: 130px;
+    }
+
+    #hud-top {
+
+        gap: 4px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    #hud-time,
+    #hud-climate,
+    #hud-season,
+    #hud-location {
+
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+
+    #minimap {
+
+        width: 110px;
+        height: 110px;
+
+        right: 10px;
+        bottom: 10px;
+    }
+
+    .menu-panel {
+
+        padding: 25px;
+    }
+}
