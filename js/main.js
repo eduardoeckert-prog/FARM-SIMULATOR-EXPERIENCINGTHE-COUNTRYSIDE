@@ -1,12 +1,12 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
 import { scene, camera, renderer, setupScene } from "./scene.js";
-import { setupControls, updateControls } from "./systems/controls.js";
+import { setupControls, updateControls } from "./systems/control.js";
 
 import { createTerrain } from "./world/terrain.js";
 import { createWater } from "./world/lakes.js";
 import { createVegetation } from "./world/tree.js";
-import { createBuildings } from "./world/building.js";
+import { createBuildings } from "./world/bulding.js";
 
 import { createCrops, updateCrops } from "./farming/crops.js";
 import { createAnimals, updateAnimals } from "./animals/animals.js";
