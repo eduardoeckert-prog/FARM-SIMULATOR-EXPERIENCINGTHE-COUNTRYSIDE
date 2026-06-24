@@ -1,6 +1,6 @@
 // waterSystem.js
 
-import { useWater } from "./sustainability.js";
+import { useWater } from "./farming/sustainability.js";
 
 const waterData = {
     totalWater: 10000,
