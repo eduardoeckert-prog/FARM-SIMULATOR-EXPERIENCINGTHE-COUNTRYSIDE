@@ -37,7 +37,7 @@ function init() {
     createBuildings();
 
     createCrops();
-    createAnimals(scene);
+    createAnimals();
 
     animate();
 }
