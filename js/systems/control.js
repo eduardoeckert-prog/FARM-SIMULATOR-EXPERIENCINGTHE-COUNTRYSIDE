@@ -101,61 +101,16 @@ MOVIMENTO
 
 export function updateControls(delta) {
 
-    direction.set(0, 0, 0);
-
-    /*
-    DIREÇÃO
-    */
-
-    if (keys["KeyW"]) direction.z -= 1;
-    if (keys["KeyS"]) direction.z += 1;
-    if (keys["KeyA"]) direction.x -= 1;
-    if (keys["KeyD"]) direction.x += 1;
-
-    direction.normalize();
-
-    /*
-    VELOCIDADE
-    */
+    const moveZ = (keys["KeyW"] ? 1 : 0) - (keys["KeyS"] ? 1 : 0);
+    const moveX = (keys["KeyD"] ? 1 : 0) - (keys["KeyA"] ? 1 : 0);
 
     const speed = keys["ShiftLeft"] ? RUN_SPEED : WALK_SPEED;
 
-    /*
-    CORREÇÃO W / S (direção correta)
-    - forward agora aponta corretamente no eixo -Z
-    */
+    const sin = Math.sin(yaw);
+    const cos = Math.cos(yaw);
 
-    console.log({
-        yaw,
-        directionZ: direction.z,
-        forwardZ: forward.z
-    });
-    
-    forward.set(
-        Math.sin(yaw),
-        0,
-        -Math.cos(yaw)
-    );
-
-    right.set(
-        Math.cos(yaw),
-        0,
-        Math.sin(yaw)
-    );
-
-    /*
-    MOVIMENTO HORIZONTAL
-    */
-
-    camera.position.addScaledVector(
-        forward,
-        direction.z * speed * delta
-    );
-
-    camera.position.addScaledVector(
-        right,
-        direction.x * speed * delta
-    );
+    camera.position.x += (sin * moveZ + cos * moveX) * speed * delta;
+    camera.position.z += (-cos * moveZ + sin * moveX) * speed * delta;
 
     /*
     PULO
