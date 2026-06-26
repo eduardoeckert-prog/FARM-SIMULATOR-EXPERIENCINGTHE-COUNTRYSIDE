@@ -107,8 +107,8 @@ export function updateControls(delta) {
     DIREÇÃO
     */
 
-    if (keys["KeyS"]) direction.z += 1;
     if (keys["KeyW"]) direction.z -= 1;
+    if (keys["KeyS"]) direction.z += 1;
     if (keys["KeyA"]) direction.x -= 1;
     if (keys["KeyD"]) direction.x += 1;
 
@@ -125,6 +125,12 @@ export function updateControls(delta) {
     - forward agora aponta corretamente no eixo -Z
     */
 
+    console.log({
+        yaw,
+        directionZ: direction.z,
+        forwardZ: forward.z
+    });
+    
     forward.set(
         Math.sin(yaw),
         0,
