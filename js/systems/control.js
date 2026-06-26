@@ -1,5 +1,6 @@
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 import { camera } from "../scene.js";
+import { getTerrainHeight } from "../world/terrain.js";
 
 const keys = {};
 
@@ -82,13 +83,9 @@ function onMouseMove(event) {
     yaw -= event.movementX * sensitivity;
     pitch -= event.movementY * sensitivity;
 
-    const limit =
-        Math.PI / 2 - 0.01;
+    const limit = Math.PI / 2 - 0.01;
 
-    pitch = Math.max(
-        -limit,
-        Math.min(limit, pitch)
-    );
+    pitch = Math.max(-limit, Math.min(limit, pitch));
 
     camera.rotation.order = "YXZ";
 
@@ -107,57 +104,46 @@ export function updateControls(delta) {
     direction.set(0, 0, 0);
 
     /*
-    ============================
     DIREÇÃO
-    ============================
     */
 
-    if (keys["KeyW"])
-        direction.z -= 1;
-
-    if (keys["KeyS"])
-        direction.z += 1;
-
-    if (keys["KeyA"])
-        direction.x -= 1;
-
-    if (keys["KeyD"])
-        direction.x += 1;
+    if (keys["KeyW"]) direction.z -= 1;
+    if (keys["KeyS"]) direction.z += 1;
+    if (keys["KeyA"]) direction.x -= 1;
+    if (keys["KeyD"]) direction.x += 1;
 
     direction.normalize();
 
     /*
-    ============================
     VELOCIDADE
-    ============================
     */
 
-    const speed =
-        keys["ShiftLeft"]
-            ? RUN_SPEED
-            : WALK_SPEED;
+    const speed = keys["ShiftLeft"] ? RUN_SPEED : WALK_SPEED;
+
+    /*
+    CORREÇÃO W / S (direção correta)
+    - forward agora aponta corretamente no eixo -Z
+    */
 
     forward.set(
         Math.sin(yaw),
         0,
-        Math.cos(yaw)
+        -Math.cos(yaw)
     );
 
     right.set(
         Math.cos(yaw),
         0,
-        -Math.sin(yaw)
+        Math.sin(yaw)
     );
 
     /*
-    ============================
     MOVIMENTO HORIZONTAL
-    ============================
     */
 
     camera.position.addScaledVector(
         forward,
-        -direction.z * speed * delta
+        direction.z * speed * delta
     );
 
     camera.position.addScaledVector(
@@ -166,43 +152,36 @@ export function updateControls(delta) {
     );
 
     /*
-    ============================
     PULO
-    ============================
     */
 
-    if (
-        keys["Space"] &&
-        onGround
-    ) {
+    if (keys["Space"] && onGround) {
         velocityY = JUMP_FORCE;
         onGround = false;
     }
 
     /*
-    ============================
     GRAVIDADE
-    ============================
     */
 
-    velocityY -=
-        GRAVITY * delta;
-
-    camera.position.y +=
-        velocityY * delta;
+    velocityY -= GRAVITY * delta;
+    camera.position.y += velocityY * delta;
 
     /*
-    ============================
-    CHÃO
-    ============================
+    CHÃO (AGORA USA TERRENO REAL)
     */
 
-    if (camera.position.y < 2) {
+    const groundY = getTerrainHeight(
+        camera.position.x,
+        camera.position.z
+    );
 
-        camera.position.y = 2;
+    const playerHeight = 2;
 
+    if (camera.position.y < groundY + playerHeight) {
+
+        camera.position.y = groundY + playerHeight;
         velocityY = 0;
-
         onGround = true;
     }
 }
