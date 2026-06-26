@@ -103,58 +103,39 @@ export function updateControls(delta) {
 
     const speed = keys["ShiftLeft"] ? RUN_SPEED : WALK_SPEED;
 
-    const forward = new THREE.Vector3(
-        Math.sin(yaw),
-        0,
-        -Math.cos(yaw)
-    );
+    // direção fixa baseada na câmera (evita bug de yaw manual)
+    const forward = new THREE.Vector3();
+    const right = new THREE.Vector3();
 
-    const right = new THREE.Vector3(
-        Math.cos(yaw),
-        0,
-        Math.sin(yaw)
-    );
+    camera.getWorldDirection(forward);
+    forward.y = 0;
+    forward.normalize();
+
+    right.crossVectors(forward, new THREE.Vector3(0, 1, 0));
+    right.normalize();
 
     let moveZ = 0;
     let moveX = 0;
 
-    if (keys["KeyW"]) moveZ = 1;
-    if (keys["KeyS"]) moveZ = -1;
-    if (keys["KeyD"]) moveX = 1;
-    if (keys["KeyA"]) moveX = -1;
+    if (keys["KeyW"]) moveZ += 1;
+    if (keys["KeyS"]) moveZ -= 1;
+    if (keys["KeyD"]) moveX += 1;
+    if (keys["KeyA"]) moveX -= 1;
 
     camera.position.addScaledVector(forward, moveZ * speed * delta);
     camera.position.addScaledVector(right, moveX * speed * delta);
-    /*
-    PULO
-    */
 
+    // pulo + gravidade (mantém simples)
     if (keys["Space"] && onGround) {
         velocityY = JUMP_FORCE;
         onGround = false;
     }
 
-    /*
-    GRAVIDADE
-    */
-
     velocityY -= GRAVITY * delta;
     camera.position.y += velocityY * delta;
 
-    /*
-    CHÃO (AGORA USA TERRENO REAL)
-    */
-
-    const groundY = getTerrainHeight(
-        camera.position.x,
-        camera.position.z
-    );
-
-    const playerHeight = 2;
-
-    if (camera.position.y < groundY + playerHeight) {
-
-        camera.position.y = groundY + playerHeight;
+    if (camera.position.y < 2) {
+        camera.position.y = 2;
         velocityY = 0;
         onGround = true;
     }
