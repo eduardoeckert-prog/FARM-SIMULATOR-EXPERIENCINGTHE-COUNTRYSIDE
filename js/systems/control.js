@@ -101,15 +101,30 @@ MOVIMENTO
 
 export function updateControls(delta) {
 
-    const forwardMove = (keys["KeyW"] ? 1 : 0) - (keys["KeyS"] ? 1 : 0);
-    const sideMove = (keys["KeyD"] ? 1 : 0) - (keys["KeyA"] ? 1 : 0);
-
     const speed = keys["ShiftLeft"] ? RUN_SPEED : WALK_SPEED;
 
-    camera.position.x += (Math.sin(yaw) * forwardMove + Math.cos(yaw) * sideMove) * speed * delta;
+    const forward = new THREE.Vector3(
+        Math.sin(yaw),
+        0,
+        -Math.cos(yaw)
+    );
 
-    camera.position.z += (-Math.cos(yaw) * forwardMove + Math.sin(yaw) * sideMove) * speed * delta;
+    const right = new THREE.Vector3(
+        Math.cos(yaw),
+        0,
+        Math.sin(yaw)
+    );
 
+    let moveZ = 0;
+    let moveX = 0;
+
+    if (keys["KeyW"]) moveZ = 1;
+    if (keys["KeyS"]) moveZ = -1;
+    if (keys["KeyD"]) moveX = 1;
+    if (keys["KeyA"]) moveX = -1;
+
+    camera.position.addScaledVector(forward, moveZ * speed * delta);
+    camera.position.addScaledVector(right, moveX * speed * delta);
     /*
     PULO
     */
