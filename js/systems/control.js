@@ -101,16 +101,14 @@ MOVIMENTO
 
 export function updateControls(delta) {
 
-    const moveZ = (keys["KeyW"] ? 1 : 0) - (keys["KeyS"] ? 1 : 0);
-    const moveX = (keys["KeyD"] ? 1 : 0) - (keys["KeyA"] ? 1 : 0);
+    const forwardMove = (keys["KeyW"] ? 1 : 0) - (keys["KeyS"] ? 1 : 0);
+    const sideMove = (keys["KeyD"] ? 1 : 0) - (keys["KeyA"] ? 1 : 0);
 
     const speed = keys["ShiftLeft"] ? RUN_SPEED : WALK_SPEED;
 
-    const sin = Math.sin(yaw);
-    const cos = Math.cos(yaw);
+    camera.position.x += (Math.sin(yaw) * forwardMove + Math.cos(yaw) * sideMove) * speed * delta;
 
-    camera.position.x += (sin * moveZ + cos * moveX) * speed * delta;
-    camera.position.z += (-cos * moveZ + sin * moveX) * speed * delta;
+    camera.position.z += (-Math.cos(yaw) * forwardMove + Math.sin(yaw) * sideMove) * speed * delta;
 
     /*
     PULO
