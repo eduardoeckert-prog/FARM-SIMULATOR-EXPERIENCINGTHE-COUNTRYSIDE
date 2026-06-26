@@ -107,8 +107,8 @@ export function updateControls(delta) {
     DIREÇÃO
     */
 
-    if (keys["KeyW"]) direction.z += 1;
-    if (keys["KeyS"]) direction.z -= 1;
+    if (keys["KeyS"]) direction.z += 1;
+    if (keys["KeyW"]) direction.z -= 1;
     if (keys["KeyA"]) direction.x -= 1;
     if (keys["KeyD"]) direction.x += 1;
 
