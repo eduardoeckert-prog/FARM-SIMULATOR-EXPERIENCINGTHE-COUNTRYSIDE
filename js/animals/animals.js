@@ -1,5 +1,3 @@
-// animals.js
-
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 import { scene } from "../scene.js";
 
@@ -95,6 +93,8 @@ function createChicken(x, z) {
 
 export function createAnimals() {
 
+  console.log("scene =", scene);
+
   for (let i = 0; i < 6; i++) {
     const cow = createCow(
       Math.random() * 40 - 20,
@@ -129,7 +129,6 @@ export function createAnimals() {
 }
 
 export function updateAnimals(deltaTime) {
-
   animals.forEach(animal => {
 
     animal.hunger -= 0.15 * deltaTime;
