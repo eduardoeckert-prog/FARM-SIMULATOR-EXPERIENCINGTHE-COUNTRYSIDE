@@ -1,6 +1,7 @@
 // animals.js
 
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
+import { scene } from "../scene.js";
 
 const animals = [];
 
@@ -92,7 +93,7 @@ function createChicken(x, z) {
   };
 }
 
-export function createAnimals(scene) {
+export function createAnimals() {
 
   for (let i = 0; i < 6; i++) {
     const cow = createCow(
